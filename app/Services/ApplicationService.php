@@ -10,13 +10,11 @@ namespace App\Services;
 
 use App\Repositories\ApplicationRepository;
 
-use App\User;
-
 /**
  * Class ApplicationService
  * @package App\Services
  */
-class ApplicationService
+class ApplicationService extends ApplicationServiceBase
 {
     /**
      * @var ApplicationRepository
@@ -48,7 +46,6 @@ class ApplicationService
      */
     public function getFirstDisplayable($appModel)
     {
-
         //set the model.
         $this->repo->setModel($appModel);
 
@@ -57,41 +54,6 @@ class ApplicationService
 
         // only return the model's displayable fields.
         return $this->displayOnlyFillableFields();
-    }
-
-    /**
-     * Filter collection to only show fillable fields.
-     * @return array
-     */
-    protected function displayOnlyFillableFields()
-    {
-        $fields = null;
-
-        $displayableFields = $this->getDisplayableFields();
-
-        foreach ($displayableFields as $key => $fieldName)
-        {
-            /** @noinspection PhpUndefinedMethodInspection */
-            $fields[$fieldName] = $this->collection->getAttribute($fieldName);
-        }
-
-        return $fields;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDisplayableFields()
-    {
-        /** @noinspection PhpUndefinedMethodInspection */
-        $fillableFields = $this->collection->getFillable();
-
-        /** @noinspection PhpUndefinedMethodInspection */
-        $myHidden = $this->collection->getHidden();
-
-        $displayableFields = array_diff($fillableFields, $myHidden);
-
-        return $displayableFields;
     }
 
 }
