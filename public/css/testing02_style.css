@@ -1,0 +1,57 @@
+/** {*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+/*}*/
+
+/*body, html {*/
+    /*height: 100%;*/
+    /*font-family: "Open Sans",Arial,sans-serif;*/
+/*}*/
+
+/*body {*/
+    /*padding-top: 40px;*/
+/*}*/
+
+/*.box {*/
+    /*padding-left: 0;*/
+/*}*/
+
+/*.input-left {*/
+    /*outline: 0;*/
+    /*border-radius: 0;*/
+    /*@include input-border-color-left(black);*/
+    /*box-sizing: content-box;*/
+/*}*/
+
+/*.input-center {*/
+    /*outline: 0;*/
+    /*border-radius: 0;*/
+    /*border-left-color: transparent;*/
+    /*border-right-color: transparent;*/
+    /*box-sizing: content-box;*/
+/*}*/
+
+/*.input-right {*/
+    /*outline: 0;*/
+    /*border-radius: 0;*/
+    /*border-left-color: transparent;*/
+    /*box-sizing: content-box;*/
+/*}*/
+
+/*.input-left:focus, .input-left[type]:focus {*/
+    /*@include input-border-color-left(black);*/
+    /*box-shadow: none;*/
+/*}*/
+
+/*.input-center:focus, .input-center[type]:focus {*/
+    /*border-color: lightgray;*/
+    /*border-left-color: transparent;*/
+    /*border-right-color: transparent;*/
+    /*box-shadow: none;*/
+/*}*/
+
+/*.input-right:focus, .input-right[type]:focus {*/
+    /*border-color: lightgray;*/
+    /*border-left-color: transparent;*/
+    /*box-shadow: none;*/
+/*}*/

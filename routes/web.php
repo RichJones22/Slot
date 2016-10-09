@@ -13,7 +13,8 @@
 
 Route::get('/', function () {
 //    return view('welcome');
-    return view('testing');
+//    return view('testing');
+    return view('testing02');
 });
 
 Route::get('/test', ['as' => 'bar.show', 'uses' => 'BarController@show']);

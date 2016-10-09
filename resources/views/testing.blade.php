@@ -18,44 +18,99 @@
     <![endif]-->
 
     <style>
-        body {
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: "Open Sans",Arial,sans-serif;
+
             padding-top: 40px;
         }
-        /*@media (max-width: 10px) {*/
-            /*body {*/
-                /*padding-top: 0;*/
-            /*}*/
-        /*}*/
-        /*fieldset {*/
-            /*margin: 30px*/
-        /*}*/
-        /*.myWidth {*/
-            /*width: 100%;*/
-        /*}*/
+
         .form-group .myHeight{
             height: 50px;
         }
-        /*input::-moz-focus-inner {*/
-            /*border: 0;*/
-        /*}*/
-        /*input:focus {*/
-            /*!*outline: none;*!*/
-            /*border: none;*/
-            /*!*margin: 0;*!*/
-            /*!*padding: 0;*!*/
-            /*!*border-color: ;*!*/
-            /*!*-webkit-box-shadow: none;*!*/
-            /*!*box-shadow: none;*!*/
-        /*}*/
-        /*.form-group  {*/
-            /*outline: none;*/
-            /*border: none;*/
-            /*margin: 0;*/
-            /*padding: 0;*/
-            /*border-color: inherit;*/
-            /*-webkit-box-shadow: none;*/
-            /*box-shadow: none;*/
-        /*}*/
+
+        textarea:focus, input:focus, input[type]:focus {
+            border-color: lightgray;
+            box-shadow: none;
+        }
+
+        .secondRow {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: column-reverse;
+            padding: 1em;
+        }
+
+        .item {
+            margin: 0;
+        }
+
+
+        /*
+        *  Jeffy Way flex box example.
+        */
+        .myContainer{
+            margin: auto;
+        }
+
+        .box {
+            padding: 20px;
+        }
+
+        .box-left {
+            border-left: 1px solid #ddd;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .box-center {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .box-right {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+        }
+
+        .columns {
+            display: flex;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+        /* Rinse and repeat for is-1 .. is-11 */
+        .column.is-2 {
+            width: 16.66667%;
+            flex: none;
+        }
+
+        .column.is-3 {
+            width: 25%;
+            flex: none;
+        }
+
+        .column.is-4 {
+            width: 33.33333%;
+            flex: none;
+        }
+
+        .column.is-6 {
+            width: 50%;
+            flex: none;
+        }
+
     </style>
 </head>
 <body>
@@ -64,19 +119,45 @@
     <div class="row">
         <div>
             <div class="form-group col-md-7 col-sm-5" style="padding-left: 0;">
-                <input style="outline: 0; border-right: hidden; border-right-color: white;border-radius: 0;box-sizing: content-box;" name="workingOnWhat" id="id_workingOnWhat" type="text" class="form-control myHeight" placeholder="What are you working on">
+                <input style="border-radius: 0;box-sizing: content-box;" name="workingOnWhat" id="id_workingOnWhat" type="text" class="form-control myHeight" placeholder="What are you working on">
             </div>
-            <div class="form-group col-md-2 col-sm-2 col-xs-6" style="padding-left: 0;outline: 0">
-                <input style="outline: 0; border-left: hidden;border-left-color: white;border-right-color: white;border-radius: 0;box-sizing: content-box;" name="workingOnWhat" id="id_workingOnWhat" type="text" class="form-control myHeight" placeholder="Project">
+            <div class="form-group col-md-2 col-sm-2 col-xs-6" style="padding-left: 0;">
+                <input style="outline: 0; border-left: hidden;border-left-color: transparent;border-right-color: transparent;border-radius: 0;box-sizing: content-box;" name="workingOnWhat" id="id_workingOnWhat" type="text" class="form-control myHeight" placeholder="Project">
             </div>
             <div class="form-group col-md-2 col-sm-2 col-xs-6" style="padding-left: 0;padding-right: 0">
-                <input style="border-left: hidden;border-right: hidden;border-left-color: white;border-right-color: white;border-radius: 0;box-sizing: content-box;" name="workingOnWhat" id="id_workingOnWhat" type="text" class="form-control myHeight" placeholder="0 Secs">
+                <input style="outline: 0;border-left: hidden;border-right: hidden;border-left-color: transparent;border-right-color: transparent;border-radius: 0;box-sizing: content-box;" name="workingOnWhat" id="id_workingOnWhat" type="text" class="form-control myHeight" placeholder="0 Secs">
             </div>
             <div class="form-group col-md-1 col-sm-1" style="padding-left: 0;">
-                <input style="border-left: hidden;border-left-color: white;border-radius: 0;box-sizing: content-box;" name="workingOnWhat" id="id_workingOnWhat" type="text" class="form-control myHeight" placeholder="Save">
+                <input style="outline: 0;border-left: hidden;border-left-color: transparent;border-radius: 0;box-sizing: content-box;" name="workingOnWhat" id="id_workingOnWhat" type="text" class="form-control myHeight" placeholder="Save">
             </div>
         </div>
     </div>
+
+    <div class="row secondRow">
+        <h3 class="item">flex box</h3>
+        <h3 class="item">testing</h3>
+    </div>
+
+    <div class="myContainer">
+        <div class="columns">
+            <div class="column is-3">
+                <input class="box box-left" placeholder="what are you working on">
+            </div>
+
+            <div class="column is-3">
+                <div class="box box-center">Hello World</div>
+            </div>
+
+            <div class="column is-3">
+                <div class="box box-center">Hello World</div>
+            </div>
+
+            <div class="column is-3">
+                <div class="box box-right">Buttons</div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 

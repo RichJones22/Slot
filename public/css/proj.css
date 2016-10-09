@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+body, html {
+  height: 100%;
+  font-family: "Open Sans",Arial,sans-serif; }
+
+body {
+  padding-top: 80px; }
+
+.box {
+  padding-left: 0; }
+
+/***********************************************************************************************************************
+*
+* params and styles for time insert bar
+*
+***********************************************************************************************************************/
+.input-border-color-left, .input-left, .input-left:focus, .input-left[type]:focus {
+  border-top-color: orange;
+  border-left-color: orange;
+  border-right-color: transparent;
+  border-bottom-color: orange; }
+
+.input-border-color-center, .input-center, .input-center:focus, .input-center[type]:focus {
+  border-top-color: orange;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: orange; }
+  @media (max-width: 768px) {
+    .input-border-color-center, .input-center, .input-center:focus, .input-center[type]:focus {
+      border-top-color: transparent;
+      border-left-color: orange;
+      border-right-color: orange;
+      border-bottom-color: transparent; } }
+
+.input-border-color-right, .input-right, .input-right:focus, .input-right[type]:focus {
+  border-top-color: orange;
+  border-left-color: transparent;
+  border-right-color: orange;
+  border-bottom-color: orange; }
+
+.input-position-style, .input-left, .input-center, .input-right {
+  outline: 0;
+  border-radius: 0;
+  box-sizing: content-box; }
+
+.input-left:focus, .input-left[type]:focus {
+  box-shadow: none; }
+
+.input-center:focus, .input-center[type]:focus {
+  box-shadow: none; }
+
+.input-right:focus, .input-right[type]:focus {
+  box-shadow: none; }
+
+/***********************************************************************************************************************
+*
+* styling for the dialog boxes.
+*
+***********************************************************************************************************************/
+.ui-dialog .ui-dialog-titlebar {
+  display: none; }
+
+.dialog-message:focus, .dialog-message[type]:focus {
+  outline: 0;
+  box-sizing: content-box; }
+
+/*# sourceMappingURL=proj.css.map */

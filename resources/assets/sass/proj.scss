@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  height: 100%;
+  font-family: "Open Sans",Arial,sans-serif;
+}
+
+body {
+  padding-top: 80px;
+}
+
+.box {
+  padding-left: 0;
+}
+
+/***********************************************************************************************************************
+*
+* params and styles for time insert bar
+*
+***********************************************************************************************************************/
+$input-border-color: orange;
+$outline: 0;
+$border-radius: 0;
+$box-sizing: content-box;
+$shadow-box: none;
+
+@mixin input-border-color-left-mix($color) {
+  border-top-color: $color;
+  border-left-color: $color;
+  border-right-color: transparent;
+  border-bottom-color: $color;
+}
+
+@mixin input-border-color-center-mix($color) {
+  border-top-color: $color;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: $color;
+  @media (max-width: 768px) {
+    border-top-color: transparent;
+    border-left-color: $color;
+    border-right-color: $color;
+    border-bottom-color: transparent;
+  }
+}
+
+@mixin input-border-color-right-mix($color) {
+  border-top-color: $color;
+  border-left-color: transparent;
+  border-right-color: $color;
+  border-bottom-color: $color;
+}
+
+.input-border-color-left {
+  @include input-border-color-left-mix($input-border-color);
+}
+
+.input-border-color-center {
+  @include input-border-color-center-mix($input-border-color);
+}
+
+.input-border-color-right {
+  @include input-border-color-right-mix($input-border-color);
+}
+
+@mixin input-position-style($outline, $border-radius, $box-sizing) {
+  outline: $outline;
+  border-radius: $border-radius;
+  box-sizing: $box-sizing;
+}
+
+.input-position-style {
+  @include input-position-style($outline, $border-radius, $box-sizing);
+}
+
+.input-left {
+  @extend .input-border-color-left;
+  @extend .input-position-style;
+}
+
+.input-left:focus, .input-left[type]:focus {
+  @extend .input-border-color-left;
+  box-shadow: $shadow-box;
+}
+
+.input-center {
+  @extend .input-border-color-center;
+  @extend .input-position-style;
+}
+
+.input-center:focus, .input-center[type]:focus {
+  @extend .input-border-color-center;
+  box-shadow: $shadow-box;
+}
+
+.input-right {
+  @extend .input-border-color-right;
+  @extend .input-position-style;
+}
+
+.input-right:focus, .input-right[type]:focus {
+  @extend .input-border-color-right;
+  box-shadow: $shadow-box;
+}
+
+/***********************************************************************************************************************
+*
+* styling for the dialog boxes.
+*
+***********************************************************************************************************************/
+
+// jquery override.
+.ui-dialog .ui-dialog-titlebar {
+  display: none;
+}
+
+.dialog-message:focus, .dialog-message[type]:focus {
+  outline: $outline;
+  box-sizing: $box-sizing;
+}
+
+
