@@ -87,7 +87,7 @@ NSProj.showModal = function() {
     $("#dialogMessageId").dialog({
         modal: false,
         draggable: false,
-        resizable: true,
+        resizable: false,
         // responsive: true,
         // clickOut: true,
         // showCloseButton: false,
@@ -96,12 +96,13 @@ NSProj.showModal = function() {
             at: 'left top',
             of: '#projectId'
         },
-        // width: 400,
+        // width: 300,
+        // height: 50,
         close: function () {
             $('#dialogMessageId').dialog( "destroy" );
         },
-        // dialogClass: 'ui-dialog-osx',
-    });
+        // dialogClass: 'project-dialog',
+    }).prev(".ui-dialog-titlebar").css("display","none");
 };
 
 

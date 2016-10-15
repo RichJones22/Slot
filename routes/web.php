@@ -1,20 +1,20 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| This file is where you may define all of the routes that are handled
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
-|
-*/
+use App\Enum\EnumAppTypes;
 
 Route::get('/', function () {
 //    return view('welcome');
 //    return view('testing');
-    return view('testing02');
+//    return view('testing02');
+
+    $types = new EnumAppTypes();
+
+    var_dump($types->makeArrayOf());
+
+//    foreach($types as $key => $value)
+//    {
+//        echo "type is: $key" . '<br/>';
+//    }
 });
 
 Route::get('/test', ['as' => 'bar.show', 'uses' => 'BarController@show']);

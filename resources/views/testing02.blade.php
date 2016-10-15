@@ -27,13 +27,13 @@
                 <input class="input-center form-control" tabindex="2" name="projectName" id="projectId" type="text" placeholder="Project">
             </div>
 
-            <div hidden class="dialog-message col-md-2 col-sm-2 col-xs-6" id="dialogMessageId" tabindex="3">
-                <div style="margin-bottom: 20px">
-                    <input class="form-control" type="text" id="projectDialogId" placeholder="Project">
-                </div>
-                <div style="width: 240px;">
-                    <input class="form-control" type="checkbox" placeholder="from database">
-                </div>
+            <div hidden class="col-md-2 col-sm-2 col-xs-6" id="dialogMessageId" tabindex="3">
+                {{--<div>--}}
+                    {{--<input class="project-dialog form-control" type="text" id="projectDialogId" placeholder="Project">--}}
+                {{--</div>--}}
+                {{--<div style="width: 240px;">--}}
+                    {{--<input class="form-control" type="checkbox" placeholder="from database">--}}
+                {{--</div>--}}
 
                 {{--<hr style="color: orange; width: 100%;padding-bottom: 10px;margin: 0;">--}}
 

@@ -28,7 +28,7 @@ body {
   border-left-color: transparent;
   border-right-color: transparent;
   border-bottom-color: orange; }
-  @media (max-width: 768px) {
+  @media only screen and (max-width: 768px) {
     .input-border-color-center, .input-center, .input-center:focus, .input-center[type]:focus {
       border-top-color: transparent;
       border-left-color: orange;
@@ -60,11 +60,20 @@ body {
 * styling for the dialog boxes.
 *
 ***********************************************************************************************************************/
-.ui-dialog .ui-dialog-titlebar {
-  display: none; }
-
-.dialog-message:focus, .dialog-message[type]:focus {
-  outline: 0;
-  box-sizing: content-box; }
+/*==================================================
+=            Bootstrap 3 Media Queries             =
+==================================================*/
+/*==========  Mobile First Method  ==========*/
+/* Custom, iPhone Retina */
+/* Extra Small Devices, Phones */
+/* Small Devices, Tablets */
+/* Medium Devices, Desktops */
+/* Large Devices, Wide Screens */
+/*==========  Non-Mobile First Method  ==========*/
+/* Large Devices, Wide Screens */
+/* Medium Devices, Desktops */
+/* Small Devices, Tablets */
+/* Extra Small Devices, Phones */
+/* Custom, iPhone Retina */
 
 /*# sourceMappingURL=proj.css.map */

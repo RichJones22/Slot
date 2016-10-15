@@ -1,3 +1,67 @@
+
+/*==================================================
+=            Bootstrap 3 Media Queries             =
+==================================================*/
+
+
+
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+
+}
+
+
+
+/*==========  Non-Mobile First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -39,7 +103,7 @@ $shadow-box: none;
   border-left-color: transparent;
   border-right-color: transparent;
   border-bottom-color: $color;
-  @media (max-width: 768px) {
+  @media only screen and (max-width : 768px) {
     border-top-color: transparent;
     border-left-color: $color;
     border-right-color: $color;
@@ -106,6 +170,25 @@ $shadow-box: none;
   box-shadow: $shadow-box;
 }
 
+@mixin project-dialog-styles($input-border-color, $outline) {
+  width: 298px;
+  border-radius: 0;
+  height: 50px;
+  //margin-bottom: 19px;
+  border-color: $input-border-color;
+  outline: $outline;
+}
+
+.project-dialog {
+  @include project-dialog-styles;
+}
+
+.project-dialog:focus,  .project-dialog[type]:focus{
+  @include project-dialog-styles;
+
+  box-shadow: $shadow-box;
+}
+
 /***********************************************************************************************************************
 *
 * styling for the dialog boxes.
@@ -113,13 +196,19 @@ $shadow-box: none;
 ***********************************************************************************************************************/
 
 // jquery override.
-.ui-dialog .ui-dialog-titlebar {
-  display: none;
-}
+//div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front{
+//  height: 50px;
+//  border-color: $input-border-color;
+//}
 
-.dialog-message:focus, .dialog-message[type]:focus {
-  outline: $outline;
-  box-sizing: $box-sizing;
-}
+//div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-style.ui-resizable {
+//  padding-left: 0;
+//  padding-top: 0;
+//  border-radius: 0;
+//}
 
+//.dialog-message:focus, .dialog-message[type]:focus {
+//  outline: $outline;
+//  box-sizing: $box-sizing;
+//}
 
