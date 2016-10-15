@@ -36,7 +36,6 @@ class Enum
         }
 
         return $this;
-
     }
 
     public function getConstants()
@@ -49,6 +48,6 @@ class Enum
             self::$constantsCache[$calledClass] = $reflection->getConstants();
         }
 
-        return self::$constantsCache[$calledClass];
+        return count(self::$constantsCache[$calledClass]) ? self::$constantsCache[$calledClass] : null;
     }
 }

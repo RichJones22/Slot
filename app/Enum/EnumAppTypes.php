@@ -11,7 +11,7 @@ namespace App\Enum;
 
 class EnumAppTypes extends Enum {
 
-    const MAIN = 0;
-    const JOINT = 1;
+//    const MAIN = 0;
+//    const JOINT = 1;
 
 }
