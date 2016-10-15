@@ -15,14 +15,28 @@ class Enum
 
     public function makeArrayOf()
     {
-        $str = "[";
-        foreach ($this->getConstants() as $key => $value)
+        if ($count = count($this->getConstants()))
         {
-            $str .= "'$key',";
-        }
-        $str .= "]";
+            $str = "[";
 
-        return $str;
+            $nextToLast = $count--;
+
+            $i = 1;
+            foreach ($this->getConstants() as $key => $value)
+            {
+                if ($i == $nextToLast) {
+                    $str .= "'$key'";
+                } else {
+                    $str .= "'$key',";
+                }
+                $i++;
+            }
+            $str .= "]";
+            return $str;
+        }
+
+        return $this;
+
     }
 
     public function getConstants()

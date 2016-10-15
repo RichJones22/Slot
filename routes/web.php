@@ -9,7 +9,7 @@ Route::get('/', function () {
 
     $types = new EnumAppTypes();
 
-    var_dump($types->makeArrayOf());
+    var_dump($types->getConstants());
 
 //    foreach($types as $key => $value)
 //    {
