@@ -1,53 +1,69 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: richjones
- * Date: 10/14/16
- * Time: 7:04 PM
- */
-
-namespace app\Enum;
+<?php namespace app\Enum;
 
 
 class Enum
 {
     private static $constantsCache = [];
 
-    public function makeArrayOf()
+    private $calledClass = null;
+
+    public function __construct()
     {
-        if ($count = count($this->getConstants()))
+        $this->calledClass = get_called_class();
+
+        $reflection = new \ReflectionClass($this->calledClass);
+        if (count($reflection->getConstants()))
         {
-            $str = "[";
-
-            $nextToLast = $count--;
-
-            $i = 1;
-            foreach ($this->getConstants() as $key => $value)
-            {
-                if ($i == $nextToLast) {
-                    $str .= "'$key'";
-                } else {
-                    $str .= "'$key',";
-                }
-                $i++;
-            }
-            $str .= "]";
-            return $str;
+            self::$constantsCache[$this->calledClass] = $reflection->getConstants();
         }
-
-        return $this;
     }
 
-    public function getConstants()
+    public function displayArrayFormat()
     {
-        $calledClass = get_called_class();
+        if ( ! empty(self::$constantsCache)) {
 
-        if(!array_key_exists($calledClass, self::$constantsCache))
-        {
-            $reflection = new \ReflectionClass($calledClass);
-            self::$constantsCache[$calledClass] = $reflection->getConstants();
+            $listOfConstants = $this->getConstantsList();
+
+            if ($count = count($listOfConstants))
+            {
+                $str = "[";
+
+                $countEnd = $count--;
+
+                $i = 1;
+                foreach ($listOfConstants as $key => $value)
+                {
+                    if ($i === $countEnd) {
+                        $str .= "'$key'";
+                    } else {
+                        $str .= "'$key',";
+                    }
+                    $i++;
+                }
+                $str .= "]";
+                return $str;
+            }
         }
 
-        return count(self::$constantsCache[$calledClass]) ? self::$constantsCache[$calledClass] : null;
+        return null;
+    }
+
+    public function getName($findValue)
+    {
+        foreach ($this->getConstantsList() as $key => $value)
+        {
+            if ($findValue === $value) {
+                return $key;
+            }
+        }
+    }
+
+    public function getConstantsList()
+    {
+        if ( ! empty(self::$constantsCache)) {
+            return self::$constantsCache[$this->calledClass];
+        }
+
+        return null;
     }
 }
