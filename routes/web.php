@@ -78,3 +78,6 @@ Route::get('/', function () {
 });
 
 Route::get('/test', ['as' => 'bar.show', 'uses' => 'BarController@show']);
+
+
+Route::any('/once', 'OnceController@show');

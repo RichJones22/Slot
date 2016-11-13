@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d4e8598430ebbf5178977910111a0041",
-    "content-hash": "8e8c802dda6ce3a76744b04585c5876b",
+    "hash": "124660e3a0049a8484bc640cba85af7d",
+    "content-hash": "925f0dfd28112f5969ab73e8e12c7911",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1046,6 +1046,59 @@
                 "rinvex"
             ],
             "time": "2016-08-05 22:40:10"
+        },
+        {
+            "name": "spatie/once",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/once.git",
+                "reference": "74a09741be2f8834f6987ec0cc569dfe9c83c589"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/once/zipball/74a09741be2f8834f6987ec0cc569dfe9c83c589",
+                "reference": "74a09741be2f8834f6987ec0cc569dfe9c83c589",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "illuminate/support": "~5.3.0",
+                "phpunit/phpunit": "5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Once\\": "src"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A magic memoization function",
+            "homepage": "https://github.com/spatie/once",
+            "keywords": [
+                "cache",
+                "callable",
+                "memozation",
+                "once",
+                "spatie"
+            ],
+            "time": "2016-11-07 10:34:57"
         },
         {
             "name": "swiftmailer/swiftmailer",
