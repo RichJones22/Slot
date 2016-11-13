@@ -1,3 +1,18 @@
+/*==================================================
+=            Bootstrap 3 Media Queries             =
+==================================================*/
+/*==========  Mobile First Method  ==========*/
+/* Custom, iPhone Retina */
+/* Extra Small Devices, Phones */
+/* Small Devices, Tablets */
+/* Medium Devices, Desktops */
+/* Large Devices, Wide Screens */
+/*==========  Non-Mobile First Method  ==========*/
+/* Large Devices, Wide Screens */
+/* Medium Devices, Desktops */
+/* Small Devices, Tablets */
+/* Extra Small Devices, Phones */
+/* Custom, iPhone Retina */
 * {
   margin: 0;
   padding: 0; }
@@ -55,25 +70,25 @@ body {
 .input-right:focus, .input-right[type]:focus {
   box-shadow: none; }
 
+.project-dialog {
+  width: 298px;
+  border-radius: 0;
+  height: 50px;
+  border-color: orange;
+  outline: 0; }
+
+.project-dialog:focus, .project-dialog[type]:focus {
+  width: 298px;
+  border-radius: 0;
+  height: 50px;
+  border-color: orange;
+  outline: 0;
+  box-shadow: none; }
+
 /***********************************************************************************************************************
 *
 * styling for the dialog boxes.
 *
 ***********************************************************************************************************************/
-/*==================================================
-=            Bootstrap 3 Media Queries             =
-==================================================*/
-/*==========  Mobile First Method  ==========*/
-/* Custom, iPhone Retina */
-/* Extra Small Devices, Phones */
-/* Small Devices, Tablets */
-/* Medium Devices, Desktops */
-/* Large Devices, Wide Screens */
-/*==========  Non-Mobile First Method  ==========*/
-/* Large Devices, Wide Screens */
-/* Medium Devices, Desktops */
-/* Small Devices, Tablets */
-/* Extra Small Devices, Phones */
-/* Custom, iPhone Retina */
 
 /*# sourceMappingURL=proj.css.map */

@@ -118,6 +118,21 @@ $shadow-box: none;
   border-bottom-color: $color;
 }
 
+@mixin input-position-style($outline, $border-radius, $box-sizing) {
+  outline: $outline;
+  border-radius: $border-radius;
+  box-sizing: $box-sizing;
+}
+
+@mixin project-dialog-styles($input-border-color, $outline) {
+  width: 298px;
+  border-radius: 0;
+  height: 50px;
+  //margin-bottom: 19px;
+  border-color: $input-border-color;
+  outline: $outline;
+}
+
 .input-border-color-left {
   @include input-border-color-left-mix($input-border-color);
 }
@@ -130,11 +145,6 @@ $shadow-box: none;
   @include input-border-color-right-mix($input-border-color);
 }
 
-@mixin input-position-style($outline, $border-radius, $box-sizing) {
-  outline: $outline;
-  border-radius: $border-radius;
-  box-sizing: $box-sizing;
-}
 
 .input-position-style {
   @include input-position-style($outline, $border-radius, $box-sizing);
@@ -170,21 +180,12 @@ $shadow-box: none;
   box-shadow: $shadow-box;
 }
 
-@mixin project-dialog-styles($input-border-color, $outline) {
-  width: 298px;
-  border-radius: 0;
-  height: 50px;
-  //margin-bottom: 19px;
-  border-color: $input-border-color;
-  outline: $outline;
-}
-
 .project-dialog {
-  @include project-dialog-styles;
+  @include project-dialog-styles($input-border-color, $outline);
 }
 
 .project-dialog:focus,  .project-dialog[type]:focus{
-  @include project-dialog-styles;
+  @include project-dialog-styles($input-border-color, $outline);
 
   box-shadow: $shadow-box;
 }

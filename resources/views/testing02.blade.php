@@ -28,9 +28,9 @@
             </div>
 
             <div hidden class="col-md-2 col-sm-2 col-xs-6" id="dialogMessageId" tabindex="3">
-                {{--<div>--}}
-                    {{--<input class="project-dialog form-control" type="text" id="projectDialogId" placeholder="Project">--}}
-                {{--</div>--}}
+                <div>
+                    <input class="project-dialog form-control" type="text" id="projectDialogId" placeholder="Project">
+                </div>
                 {{--<div style="width: 240px;">--}}
                     {{--<input class="form-control" type="checkbox" placeholder="from database">--}}
                 {{--</div>--}}

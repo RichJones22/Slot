@@ -98,9 +98,9 @@ NSProj.showModal = function() {
         },
         // width: 300,
         // height: 50,
-        close: function () {
-            $('#dialogMessageId').dialog( "destroy" );
-        },
+        // close: function () {
+        //     $('#dialogMessageId').dialog( "destroy" );
+        // },
         // dialogClass: 'project-dialog',
     }).prev(".ui-dialog-titlebar").css("display","none");
 };
