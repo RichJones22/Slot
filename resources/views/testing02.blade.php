@@ -58,6 +58,31 @@
         </form>
     </div>
 
+    {!! Laralang::trans('Hello world!') !!}
+    <br>
+    {!! Laralang::trans('Hello world!')->setTo('es') !!}
+    <br>
+    {!! Laralang::trans('bob')->setTo('es') !!}
+    <br>
+    {!! Laralang::trans('are you coming?')->setTo('es') !!}
+    <br>
+    {!! Laralang::trans('welcome')->setTo('es') !!}
+    <br>
+    {!! Laralang::trans('how about you?')->setTo('es') !!}
+    <br>
+    {!! Laralang::trans('you are logged in!')->setTo('es') !!}
+    <br>
+    {!! Laralang::trans('dinner')->setTo('es') !!}
+    <br>
+    {!! Laralang::trans('time')->setTo('es') !!}
+    <br>
+    {!! Laralang::trans('breakfast')->setTo('es') !!}
+    <br>
+    {!! Laralang::trans('lunch')->setTo('es') !!}
+    <br>
+    {!! Laralang::trans('parents')->setTo('es') !!}
+
+
 </div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

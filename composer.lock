@@ -4,9 +4,50 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2bc6a08ebaaff8566aacd91a9aafbb3e",
-    "content-hash": "6d3259ee7666d39487955810a87d95be",
+    "hash": "4e57a92cd84ffab8b3b44da6cafb09e3",
+    "content-hash": "2de957f4f0c7f8a3a9b3d887bd9db430",
     "packages": [
+        {
+            "name": "aitor24/laralang",
+            "version": "3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/24aitor/laralang.git",
+                "reference": "7fe483652deaa422400d4cc20ce70747771c44c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/24aitor/laralang/zipball/7fe483652deaa422400d4cc20ce70747771c44c3",
+                "reference": "7fe483652deaa422400d4cc20ce70747771c44c3",
+                "shasum": ""
+            },
+            "type": "translations",
+            "autoload": {
+                "psr-4": {
+                    "Aitor24\\Laralang\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aitor Riba",
+                    "email": "1aitorribaarchilla@gmail.com",
+                    "homepage": "http://www.aitorriba.ml/",
+                    "role": "author"
+                },
+                {
+                    "name": "Erik Campobadal",
+                    "email": "soc@erik.cat",
+                    "homepage": "https://erik.cat/",
+                    "role": "developer"
+                }
+            ],
+            "description": "This package let you translate strings from any language to another in laravel 5.X",
+            "time": "2016-11-21 17:45:55"
+        },
         {
             "name": "barryvdh/laravel-ide-helper",
             "version": "v2.2.1",
@@ -3032,7 +3073,7 @@
                     "role": "lead"
                 }
             ],
-            "description": "Library that provides model, processing, and rendering functionality for PHP code coverage information.",
+            "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
             "homepage": "https://github.com/sebastianbergmann/php-code-coverage",
             "keywords": [
                 "coverage",

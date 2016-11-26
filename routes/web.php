@@ -81,3 +81,11 @@ Route::get('/test', ['as' => 'bar.show', 'uses' => 'BarController@show']);
 
 
 Route::get('/phpfiddler', 'PhpFiddler@show');
+
+Route::get('/set_db_language_translations', function() {
+    Laralang::trans('Hello world!');
+    Laralang::trans('Hello world!')->setTo('es');
+    Laralang::trans('my name is ')->setTo('es');
+    Laralang::trans('how are you')->setTo('es');
+    Laralang::trans('welcome')->setTo('es');
+});

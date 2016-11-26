@@ -4,8 +4,16 @@ use Illuminate\Database\Seeder;
 
 use App\User;
 
+/**
+ * Class DatabaseSeeder
+ */
 class DatabaseSeeder extends Seeder
 {
+
+    protected $seeds = [
+      SeedDBLangTranslations::class,
+    ];
+
     /**
      * Run the database seeds.
      *
@@ -18,5 +26,13 @@ class DatabaseSeeder extends Seeder
         User::truncate();
 
         factory(App\User::class, 50)->create();
+        
+
+        // run each seed class
+        foreach($this->seeds as $seed)
+        {
+            $this->call($seed);
+        }
+
     }
 }
