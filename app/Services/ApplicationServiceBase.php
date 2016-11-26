@@ -10,14 +10,24 @@ namespace app\Services;
 
 
 
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * Class ApplicationServiceBase
+ * @package app\Services
+ */
 class ApplicationServiceBase
 {
+    /**
+     * @var Model
+     */
+    protected $model;
 
     /**
-     * Filter collection to only show displayable fields (fillable - hidden).
+     * Filter model to only show displayable fields (fillable - hidden).
      * @return array
      */
-    protected function displayOnlyFillableFields()
+    protected function getDisplayOnlyFillableFields()
     {
         $fields = null;
 
@@ -25,8 +35,7 @@ class ApplicationServiceBase
 
         foreach ($displayableFields as $key => $fieldName)
         {
-            /** @noinspection PhpUndefinedFieldInspection */
-            $fields[$fieldName] = $this->collection->getAttribute($fieldName);
+            $fields[$fieldName] = $this->model->getAttribute($fieldName);
         }
 
         return $fields;
@@ -37,13 +46,11 @@ class ApplicationServiceBase
      */
     protected function getDisplayableFields()
     {
-        /** @noinspection PhpUndefinedFieldInspection */
-        $fillableFields = $this->collection->getFillable();
+        $fillableFields = $this->model->getFillable();
 
-        /** @noinspection PhpUndefinedFieldInspection */
-        $myHidden = $this->collection->getHidden();
+        $hiddenFields = $this->model->getHidden();
 
-        $displayableFields = array_diff($fillableFields, $myHidden);
+        $displayableFields = array_diff($fillableFields, $hiddenFields);
 
         return $displayableFields;
     }

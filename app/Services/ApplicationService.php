@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: richjones
- * Date: 9/11/16
- * Time: 1:05 PM
- */
 
 namespace App\Services;
 
@@ -22,12 +16,6 @@ class ApplicationService extends ApplicationServiceBase
     protected $repo;
 
     /**
-     * Model's collection of data
-     * @var
-     */
-    protected $collection;
-
-    /**
      * ApplicationService constructor.
      * @param ApplicationRepository $repo
      */
@@ -37,23 +25,21 @@ class ApplicationService extends ApplicationServiceBase
     }
 
     /**
-     * - set class for model.
-     * - get model's collection of data.
-     * - return displayable array.
-     *
-     * @param $appModel
+     * @param $model
      * @return array
      */
-    public function getFirstDisplayable($appModel)
+    public function getDisplayable($model)
     {
         //set the model.
-        $this->repo->setModel($appModel);
+        $this->repo->setModel($model);
 
-        // get the data collection
-        $this->collection =  $this->repo->find(1);
+        // get the data model
+        $this->model =  $this->repo->find(1);
+        $entity =  collect($this->repo->find(1));
+        $entity = $entity->reverse();
 
         // only return the model's displayable fields.
-        return $this->displayOnlyFillableFields();
+        return $this->getDisplayOnlyFillableFields();
     }
 
 }

@@ -125,12 +125,14 @@ $shadow-box: none;
 }
 
 @mixin project-dialog-styles($input-border-color, $outline) {
-  width: 298px;
-  border-radius: 0;
-  height: 50px;
+  //width: 600px;
+  padding: 0;
+  border: none;
+  //border-radius: 0;
+  //height: 100px;
   //margin-bottom: 19px;
-  border-color: $input-border-color;
-  outline: $outline;
+  //border-color: $input-border-color;
+  //outline: $outline;
 }
 
 .input-border-color-left {
@@ -193,13 +195,13 @@ $shadow-box: none;
 /***********************************************************************************************************************
 *
 * styling for the dialog boxes.
-*
+*¨
 ***********************************************************************************************************************/
 
 // jquery override.
 //div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front{
-//  height: 50px;
-//  border-color: $input-border-color;
+//  width: 100%;
+//  padding: 0;
 //}
 
 //div.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-style.ui-resizable {

@@ -10,13 +10,20 @@ namespace App\Repositories;
 
 use Rinvex\Repository\Repositories\EloquentRepository;
 
+/**
+ * Class ApplicationRepository
+ * @package App\Repositories
+ */
 class ApplicationRepository extends EloquentRepository
 {
+    /**
+     * @var string
+     */
     protected $repositoryId = 'rinvex.repository.uniqueid';
 
-    public function __construct()
-    {
-        $help = "me";
-    }
+//    public function __construct()
+//    {
+//        $help = "me";
+//    }
 
 }

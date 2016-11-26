@@ -75,6 +75,9 @@ Route::get('/', function () {
 ////    {
 ////        echo "type is: $key" . '<br/>';
 ////    }
-});
+});//
 
 Route::get('/test', ['as' => 'bar.show', 'uses' => 'BarController@show']);
+
+
+Route::get('/phpfiddler', 'PhpFiddler@show');

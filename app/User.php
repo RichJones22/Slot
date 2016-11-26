@@ -2,6 +2,10 @@
 
 namespace App;
 
+/**
+ * Class User
+ * @package App
+ */
 class User extends UserBase
 {
 
@@ -23,11 +27,17 @@ class User extends UserBase
         'password', 'remember_token',
     ];
 
+    /**
+     * @param $name
+     */
     public function setName($name)
     {
         $this->attributes['name'] = $name;
     }
 
+    /**
+     * @return mixed
+     */
     public function getName()
     {
         return $this->attributes['name'];

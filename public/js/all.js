@@ -1,7 +1,7 @@
 // namespace.
-var NSProj = {};
+let NSProj = {};
 
-var lastTabIndex=-1, currentTabIndex=-1;
+let lastTabIndex=-1, currentTabIndex=-1;
 
 // load all javascript once the document is ready.
 $(document).ready(function(){
@@ -15,7 +15,7 @@ $(document).ready(function(){
 
 // modal tabbing control
 $('#timeId').on('keydown',function(e) {
-    var keyCode = e.keyCode || e.which;
+    let keyCode = e.keyCode || e.which;
 
     if (keyCode == 9) {
         if ($('#dialogMessageId').is(":visible")) {
@@ -42,7 +42,7 @@ $('#workingOnId').focusin(function(e) {
 
 // restrict tabbing to remain on the current row.
 $('#workingOnId').on('keydown',function(e) {
-    var keyCode = e.keyCode || e.which;
+    let keyCode = e.keyCode || e.which;
 
     if (keyCode == 9) {
         e.preventDefault();
@@ -51,7 +51,7 @@ $('#workingOnId').on('keydown',function(e) {
 });
 
 $('#dialogMessageId').on('keydown',function(e) {
-    var keyCode = e.keyCode || e.which;
+    let keyCode = e.keyCode || e.which;
 
     if (keyCode == 9) {
         e.preventDefault();
@@ -65,7 +65,7 @@ $('#dialogMessageId').on('keydown',function(e) {
 });
 
 $('#saveId').on('keydown',function(e) {
-    var keyCode = e.keyCode || e.which;
+    let keyCode = e.keyCode || e.which;
 
     if (keyCode == 9) {
         e.preventDefault();
@@ -96,8 +96,8 @@ NSProj.showModal = function() {
             at: 'left top',
             of: '#projectId'
         },
-        // width: 300,
-        // height: 50,
+        width: 300,
+        height: 88,
         // close: function () {
         //     $('#dialogMessageId').dialog( "destroy" );
         // },
