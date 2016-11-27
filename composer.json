@@ -9,7 +9,8 @@
         "laravel/framework": "5.3.*",
         "rinvex/repository": "^2.0",
         "barryvdh/laravel-ide-helper": "^2.2",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "premise/laralang": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -31,6 +32,12 @@
             "tests/TestCase.php"
         ]
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/RichJones22/laralang.git"
+        }
+    ],
     "scripts": {
         "post-root-package-install": [
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
