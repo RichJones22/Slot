@@ -7,3 +7,5 @@ Homestead.yaml
 .env
 _ide_helper.php
 !/vendor/aitor24/
+.phpstorm.meta.php
+_ide_helper_models.php

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4e57a92cd84ffab8b3b44da6cafb09e3",
-    "content-hash": "2de957f4f0c7f8a3a9b3d887bd9db430",
+    "hash": "2c2331c8165401cc4860543b0955afbd",
+    "content-hash": "80b316b55ac692c80af086ff78743a1e",
     "packages": [
         {
             "name": "aitor24/laralang",
@@ -1342,6 +1342,41 @@
                 "random"
             ],
             "time": "2016-11-07 23:38:38"
+        },
+        {
+            "name": "premise/lang",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RichJones22/lang.git",
+                "reference": "610c662b68cca1b3612e584182ea503ddd9ca1f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RichJones22/lang/zipball/610c662b68cca1b3612e584182ea503ddd9ca1f3",
+                "reference": "610c662b68cca1b3612e584182ea503ddd9ca1f3",
+                "shasum": ""
+            },
+            "type": "translations",
+            "autoload": {
+                "psr-4": {
+                    "Premise\\lang\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Premise Software",
+                    "email": "jones_rich@ayhoo.com",
+                    "homepage": "http://www.premisesoftware.com/",
+                    "role": "user"
+                }
+            ],
+            "description": "A language library for Laravel 5.x",
+            "time": "2016-11-27 00:35:51"
         },
         {
             "name": "psr/log",
@@ -4128,7 +4163,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "premise/lang": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

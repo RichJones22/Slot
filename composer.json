@@ -10,7 +10,8 @@
         "rinvex/repository": "^2.0",
         "barryvdh/laravel-ide-helper": "^2.2",
         "doctrine/dbal": "^2.5",
-        "aitor24/laralang": "^3.0"
+        "aitor24/laralang": "^3.0",
+        "premise/lang": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
