@@ -73,10 +73,14 @@ body {
 
 .project-dialog {
   padding: 0;
+  margin-top: -4px;
+  margin-left: -5px;
   border: none; }
 
 .project-dialog:focus, .project-dialog[type]:focus {
   padding: 0;
+  margin-top: -4px;
+  margin-left: -5px;
   border: none;
   box-shadow: none; }
 

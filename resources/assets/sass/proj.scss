@@ -127,8 +127,10 @@ $shadow-box: none;
 @mixin project-dialog-styles($input-border-color, $outline) {
   //width: 600px;
   padding: 0;
+  margin-top: -4px;
+  margin-left: -5px;
   border: none;
-  //border-radius: 0;
+  //border-radius: 25px;
   //height: 100px;
   //margin-bottom: 19px;
   //border-color: $input-border-color;

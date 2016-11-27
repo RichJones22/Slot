@@ -97,13 +97,21 @@ NSProj.showModal = function() {
             of: '#projectId'
         },
         width: 300,
-        height: 88,
+        // height: 88,
+        height: 125,
         // close: function () {
         //     $('#dialogMessageId').dialog( "destroy" );
         // },
         // dialogClass: 'project-dialog',
     }).prev(".ui-dialog-titlebar").css("display","none");
 };
+
+// NSProj.loseFocus = function () {
+    $("#projectDialogId").focusout(function () {
+        let value = $("#projectDialogId").val();
+        $('#projectId').val(value);
+    });
+// };
 
 
 
