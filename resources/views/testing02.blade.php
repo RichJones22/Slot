@@ -57,6 +57,12 @@
             </div>
         </form>
     </div>
+    {{--<br>--}}
+    {{--{!! Laralang::trans('Hello world!') !!}--}}
+    {{--<br>--}}
+    {{--{!! Laralang::trans('Hello world!')->setTo('es') !!}--}}
+    {{--<br>--}}
+    {{--{!! Laralang::trans('Welcome')->setTo('es') !!}--}}
 
 </div>
 

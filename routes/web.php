@@ -1,14 +1,15 @@
 <?php
 
 use App\Enum\EnumAppTypes;
+use Premise\Utilities\PremiseUtilities;
+
+Route::get('testing', function(){
+   dump(PremiseUtilities::getDirectoriesForDirectory("../app/"));
+});
+
 
 Route::get('map', function() {
     $myArray = [1,2,3];
-//    $myArray = [
-//        'bob' => 1,
-//        'john' => 2,
-//        'steve' => 3,
-//    ];
 
     echo "starting with ";
     var_dump($myArray);
@@ -24,16 +25,23 @@ Route::get('map', function() {
 
 Route::get('reduce', function() {
     $myArray = [1,2,3];
-//    $myArray = [
-//        'bob' => 1,
-//        'john' => 2,
-//        'steve' => 3,
-//    ];
 
     echo "starting with: " . json_encode($myArray) . "<br/><br/>";
 
     $myResult = array_reduce($myArray, function($carry, $item) {
-        return $carry += $item ?: $carry;
+        return $carry += $item;
+    });
+
+    echo "ending with: " . json_encode($myResult) . "<br/><br/>";
+});
+
+Route::get('filter', function() {
+    $myArray = [1,2,3];
+
+    echo "starting with: " . json_encode($myArray) . "<br/><br/>";
+
+    $myResult = array_filter($myArray, function($item) use ($myArray){
+        return $item === 2;
     });
 
     echo "ending with: " . json_encode($myResult) . "<br/><br/>";
