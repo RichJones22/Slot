@@ -4,7 +4,7 @@ use App\Enum\EnumAppTypes;
 use Premise\Utilities\PremiseUtilities;
 
 Route::get('testing', function(){
-   dump(PremiseUtilities::getDirectoriesForDirectory("../app/"));
+  Artisan::call('optionsHouse:get-activity');
 });
 
 
