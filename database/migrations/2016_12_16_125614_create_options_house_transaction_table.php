@@ -34,9 +34,10 @@ class CreateOptionsHouseTransactionTable extends Migration
             $table->float('commission');
             $table->float('amount');
             $table->string('security_type');
+            $table->date('expiration');
             $table->string('security_description');
             $table->string('position_state');
-            $table->string('delilverables');
+            $table->string('deliverables');
             $table->string('market_statistics');
             $table->string('trade_journal_notes');
             $table->timestamps();
