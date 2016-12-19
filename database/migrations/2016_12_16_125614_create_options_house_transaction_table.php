@@ -26,15 +26,15 @@ class CreateOptionsHouseTransactionTable extends Migration
             $table->integer('strike_price');
             $table->string('option_type');
             $table->string('option_side');
-            $table->integer('option_quantity');
+            $table->integer('option_quantity')->nullable();
             $table->string('symbol');
-            $table->float('price_per_unit');
+            $table->float('price_per_unit')->nullable();
             $table->string('underlier_symbol');
             $table->float('fee');
             $table->float('commission');
             $table->float('amount');
             $table->string('security_type');
-            $table->date('expiration');
+            $table->date('expiration')->nullable();
             $table->string('security_description');
             $table->string('position_state');
             $table->string('deliverables');

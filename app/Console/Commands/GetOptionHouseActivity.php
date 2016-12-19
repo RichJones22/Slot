@@ -140,6 +140,10 @@ class GetOptionHouseActivity extends Command
             while (($row = fgetcsv($handle, 4096)) !== false) {
                 if (empty($fields)) {
                     $fields = $row;
+
+                    // 'type' occurs twice and position 3 and 6, so need to rename.
+                    $fields[3] = 'trade_type';
+                    $fields[6] = 'option_type';
                     continue;
                 }
                 foreach ($row as $k => $value) {
@@ -167,10 +171,6 @@ class GetOptionHouseActivity extends Command
     {
         // write records to the db.
         foreach ($transactions as $transaction) {
-            if ((int) $transaction['TransactionID'] === 0) {
-                continue; // don't process 0 transaction_id records.
-            }
-
             // check if transaction_id exists.
             /** @var Model $found */
             $found = DB::table('options_house_transaction')
@@ -194,20 +194,34 @@ class GetOptionHouseActivity extends Command
         $this->optionsHouseTransactionM->setTransactionId($transaction['TransactionID']);
         $this->optionsHouseTransactionM->setCloseDate((new Carbon($transaction['Date']))->format('Y-m-d'));
         $this->optionsHouseTransactionM->setCloseTime((new Carbon($transaction['Time']))->format('h:i:s'));
-        $this->optionsHouseTransactionM->setTradeType($transaction['Type']);
+        $this->optionsHouseTransactionM->setTradeType($transaction['trade_type']);
         $this->optionsHouseTransactionM->setDescription($transaction['Description']);
-        $this->optionsHouseTransactionM->setOptionType($transaction['Type']);
+        $this->optionsHouseTransactionM->setOptionType($transaction['option_type']);
         $this->optionsHouseTransactionM->setStrikePrice($transaction['Strike']);
         $this->optionsHouseTransactionM->setOptionSide($transaction['Side']);
-        $this->optionsHouseTransactionM->setOptionQuantity($transaction['Quantity']);
+
+        if ($transaction['Quantity'] === '') {
+            $quantity = null;
+        } else {
+            $quantity = $transaction['Quantity'];
+        }
+        $this->optionsHouseTransactionM->setOptionQuantity($quantity);
+
         $this->optionsHouseTransactionM->setSymbol($transaction['Symbol']);
-        $this->optionsHouseTransactionM->setPricePerUnit($transaction['Price per unit']);
+        $this->optionsHouseTransactionM->setPricePerUnit($transaction['Price per unit'] === '' ?? null);
         $this->optionsHouseTransactionM->setUnderlierSymbol($transaction['Underlier Symbol']);
         $this->optionsHouseTransactionM->setFee($transaction['Fee']);
         $this->optionsHouseTransactionM->setCommission($transaction['Commission']);
         $this->optionsHouseTransactionM->setAmount($transaction['Amount']);
         $this->optionsHouseTransactionM->setSecurityType($transaction['Security Type']);
-        $this->optionsHouseTransactionM->setExpiration((new Carbon($transaction['Expiration Date']))->format('Y-m-d'));
+
+        if ($transaction['Expiration Date'] === '') {
+            $expirationDate = null;
+        } else {
+            $expirationDate = (new Carbon($transaction['Expiration Date']))->format('Y-m-d');
+        }
+        $this->optionsHouseTransactionM->setExpiration($expirationDate);
+
         $this->optionsHouseTransactionM->setSecurityDescription($transaction['Security Description']);
         $this->optionsHouseTransactionM->setPositionState($transaction['Open or Close']);
         $this->optionsHouseTransactionM->setDeliverables($transaction['Deliverables']);
