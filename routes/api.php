@@ -1,5 +1,4 @@
-<?php
-
+<?php declare(strict_types=1);
 use Illuminate\Http\Request;
 
 /*
@@ -17,26 +16,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Route::get('vue-test', function () {
+    return ['Laravel', 'Vue', 'PHP', 'JavaScript', 'Tooling'];
+});

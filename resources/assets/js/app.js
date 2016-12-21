@@ -7,6 +7,9 @@
 
 require('./bootstrap');
 
+import * as axios from "vue";
+import * as $ from "jquery";
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the body of the page. From here, you may begin adding components to
@@ -15,6 +18,11 @@ require('./bootstrap');
 
 Vue.component('example', require('./components/Example.vue'));
 
-const app = new Vue({
-    el: 'body'
+Vue.component('vue-test', require('./components/vue-test.vue'));
+
+// Vue.prototype.$http = axios;
+
+// const app = new Vue({
+new Vue({
+    el: 'body',
 });

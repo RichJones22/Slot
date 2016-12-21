@@ -322,6 +322,9 @@
                 </table>
             </div>
 
+            <example></example>
+            <vue-test></vue-test>
+
             <div class="mastfoot">
                 <div class="inner">
                     {{--<p>Cover template for <a href="https://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>--}}
@@ -340,6 +343,8 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
-
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/js/all.js"></script>
+<script src="/js/app.js"></script>
 </body>
 </html>

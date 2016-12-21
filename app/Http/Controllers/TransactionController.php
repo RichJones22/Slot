@@ -21,87 +21,21 @@ class TransactionController extends Controller
     }
 
     /**
-     * @param $year
-     */
-    public function getByYear($year)
-    {
-        $where1 = 'substring(close_date,1,4)';
-        $where2 = ['Trade'];
-
-        $totalSum = 0;
-
-        $transactions = DB::table('options_house_transaction')
-            ->select('close_date',
-                'underlier_symbol',
-                'option_side',
-                'option_quantity',
-                'strike_price',
-                'expiration',
-                'amount')
-            ->whereIn('trade_type', $where2)
-            ->where(DB::raw($where1), $year)
-            ->get();
-
-        foreach ($transactions as $transaction) {
-            echo $transaction->close_date.' '
-                .$transaction->underlier_symbol.' '
-                .$transaction->option_side.' '
-                .$transaction->option_quantity.' '
-                .$transaction->strike_price.' '
-                .$transaction->expiration.' '
-                .$transaction->amount.'</br>';
-
-            $totalSum += $transaction->amount;
-        }
-
-        echo "</br> Symbol total: $totalSum".'</br>';
-    }
-
-    /**
-     * @param $year
-     * @param $symbol
-     */
-    public function getByYearBySymbol($year, $symbol)
-    {
-        $where1 = 'substring(close_date,1,4)';
-        $where2 = ['Trade'];
-
-        $totalSum = 0;
-
-        $transactions = DB::table('options_house_transaction')
-            ->select('close_date', 'underlier_symbol', 'option_side', 'option_quantity', 'symbol', 'amount')
-            ->whereIn('trade_type', $where2)
-            ->where(DB::raw($where1), $year)
-            ->where('underlier_symbol', $symbol)
-            ->orderBy('transaction_id', 'option_side')
-            ->get();
-
-        foreach ($transactions as $transaction) {
-            echo $transaction->close_date.' '
-                .$transaction->underlier_symbol.' '
-                .$transaction->option_side.' '
-                .$transaction->option_quantity.' '
-                .$transaction->symbol.' '
-                .$transaction->amount.'</br>';
-
-            $totalSum += $transaction->amount;
-        }
-
-        echo "</br> Symbol total: $totalSum".'</br>';
-    }
-
-    /**
      * @param $symbol
      */
     public function getBySymbol($symbol)
     {
         $where2 = ['Trade'];
 
+        $tradeSum = 0;
+        $tradeCount = 0;
         $totalSum = 0;
 
         $transactions = DB::table('options_house_transaction')
-            ->select('close_date',
+            ->select(
+                'close_date',
                 'underlier_symbol',
+                'position_state',
                 'option_side',
                 'option_quantity',
                 'strike_price',
@@ -112,136 +46,98 @@ class TransactionController extends Controller
             ->whereIn('trade_type', $where2)
             ->where('underlier_symbol', $symbol)
             ->where('security_type', 'OPTION')
-            ->orderBy('close_date', 'desc')
-            ->orderBy('option_side', 'desc')
+            ->orderBy('close_date', 'asc')
+            ->orderBy('option_side', 'asc')
+            ->orderBy('expiration', 'asc')
             ->get();
 
-        // reverse the order for better readability.
-        $transactions = $transactions->reverse();
+        // cull single buy options; this technique is for selling and rolling sold options
+        $transactions = $this->findRemoveSingleBuyItem($transactions);
 
         // consolidate transactions
         $transactions = $this->consolidateTransactions($transactions);
 
         // echo output.
+        $i = 1;
+        $count = $transactions->count();
         foreach ($transactions as $transaction) {
             echo $transaction->close_date.' '
                 .$transaction->underlier_symbol.' '
+                .$transaction->position_state.' '
                 .$transaction->option_side.' '
                 .$transaction->option_quantity.' '
                 .$transaction->strike_price.' '
                 .$transaction->expiration.' '
-                .$transaction->symbol.' '
                 .$transaction->amount.'</br>';
 
+            $tradeSum += $transaction->amount;
+            $tradeCount += $transaction->option_quantity;
             $totalSum += $transaction->amount;
 
-            // determine if trade has ended.
+            // check if trade ended
+            $this->didTradeEnd($transaction, $where2, $count, $i, $tradeSum);
+            ++$i;
+        }
+
+        echo "</br> Symbol total: $totalSum".'</br>';
+    }
+
+    /**
+     * @param Collection $transactions
+     *
+     * @return Collection
+     */
+    protected function findRemoveSingleBuyItem(Collection $transactions): Collection
+    {
+        $transactions = $transactions->sort(function ($a, $b) {
+            if ($a->expiration === $b->expiration) {
+                return 0;
+            }
+
+            return ($a->expiration < $b->expiration) ? -1 : 1;
+        });
+
+        $transactions = $this->removeSingleBuys($transactions);
+
+        return $transactions;
+    }
+
+    /**
+     * @param Collection $transactions
+     *
+     * @return Collection
+     */
+    protected function removeSingleBuys(Collection $transactions): Collection
+    {
+        $where2 = ['Trade'];
+
+        foreach ($transactions as $transaction) {
             if ($transaction->option_side === 'BUY') {
                 $counts = DB::table('options_house_transaction')
                     ->select(DB::raw('count(*) as count'))
-                    ->where('close_date', $transaction->close_date)
+                    ->whereIn('trade_type', $where2)
+                    ->where('expiration', $transaction->expiration)
                     ->where('underlier_symbol', $transaction->underlier_symbol)
-                    ->where('option_side', 'SELL')
                     ->where('security_type', 'OPTION')
-                    ->whereIn('trade_type', $where2)
                     ->get();
 
                 foreach ($counts as $count) {
-                    if ($count->count === 0) {
-                        dump('im here');
-                    }
-                }
-            } elseif ($transaction->option_side === 'SELL') {
-                $counts = DB::table('options_house_transaction')
-                    ->select(DB::raw('count(*) as count'))
-                    ->where('symbol', $transaction->symbol)
-                    ->whereIn('trade_type', $where2)
-                    ->get();
-
-                foreach ($counts as $count) {
+                    // check if we have a group to consolidate
                     if ($count->count === 1) {
-                        dump('im here');
+                        // pull out the group.
+                        $transactions = $transactions->filter(function ($x) use ($transaction) {
+                            if ($x->transaction_id !== $transaction->transaction_id) {
+                                return $x;
+                            }
+
+                            return false;
+                        });
                     }
                 }
             }
         }
 
-        echo "</br> Symbol total: $totalSum".'</br>';
-    }
-
-    /**
-     * @param $yearMonth
-     *
-     * @internal param Request $request
-     */
-    public function getByYearMonth($yearMonth)
-    {
-        $where1 = 'substring(close_date,1,7)';
-        $where2 = 'Trade';
-
-        $totalSum = 0;
-
-        $symbols = DB::table('options_house_transaction')
-            ->select('underlier_symbol')
-            ->where('trade_type', $where2)
-            ->where(DB::raw($where1), $yearMonth)
-            ->groupBy('underlier_symbol')
-            ->get();
-
-        foreach ($symbols as $symbol) {
-            $sum = DB::table('options_house_transaction')
-                ->select(DB::raw('sum(amount) as sum'))
-                ->where('trade_type', $where2)
-                ->where(DB::raw($where1), $yearMonth)
-                ->where('underlier_symbol', $symbol->underlier_symbol)
-                ->first();
-
-            echo $yearMonth.' '.$symbol->underlier_symbol.' '.$sum->sum.'</br>';
-
-            $totalSum += $sum->sum;
-        }
-
-        echo "</br> Monthly total: $totalSum".'</br>';
-    }
-
-    /**
-     * @param $yearMonth
-     * @param $symbol
-     */
-    public function getByYearMonthBySymbol($yearMonth, $symbol)
-    {
-        $where1 = 'substring(close_date,1,7)';
-        $where2 = 'Trade';
-
-        $totalSum = 0;
-
-        $transactions = DB::table('options_house_transaction')
-            ->select('close_date',
-                'underlier_symbol',
-                'option_side',
-                'option_quantity',
-                'strike_price',
-                'expiration',
-                'amount')
-            ->where('trade_type', $where2)
-            ->where(DB::raw($where1), $yearMonth)
-            ->where('underlier_symbol', $symbol)
-            ->orderBy('transaction_id', 'option_side')
-            ->get();
-
-        foreach ($transactions as $transaction) {
-            echo $transaction->close_date.' '
-                .$transaction->underlier_symbol.' '
-                .$transaction->option_side.' '
-                .$transaction->option_quantity.' '
-                .$transaction->strike_price.' '
-                .$transaction->expiration.' '
-                .$transaction->amount.'</br>';
-
-            $totalSum += $transaction->amount;
-        }
-
-        echo "</br> Symbol total: $totalSum".'</br>';
+        return $transactions;
     }
 
     /**
@@ -256,62 +152,130 @@ class TransactionController extends Controller
         foreach ($transactions as $transaction) {
             $counts = DB::table('options_house_transaction')
                 ->select(DB::raw('count(*) as count'))
-                ->where('close_date', $transaction->close_date)
+                ->where('expiration', $transaction->expiration)
                 ->where('underlier_symbol', $transaction->underlier_symbol)
                 ->where('option_side', $transaction->option_side)
+                ->where('security_type', 'OPTION')
                 ->get();
 
             foreach ($counts as $count) {
+                // check if we have a group to consolidate
                 if ($count->count > 1) {
-                    // pull out the group.
-                    $toSum = $transactions->filter(function ($x) use ($transaction) {
-                        if ($x->close_date === $transaction->close_date &&
-                            $x->underlier_symbol === $transaction->underlier_symbol &&
-                            $x->option_side === $transaction->option_side) {
-                            return $x;
-                        }
+                    // consolidate the group
+                    $transactions = $this->consolidateGroup($transactions, $transaction);
 
-                        return false;
-                    });
-
-                    // sum the amounts
-                    $sumAmount = $toSum->reduce(function ($carry, $item) {
-                        return $carry += $item->amount;
-                    });
-
-                    // sum the quantities
-                    $sumQuantity = $toSum->reduce(function ($carry, $item) {
-                        return $carry += $item->option_quantity;
-                    });
-
-                    // create the summed element
-                    $toAddBack = $toSum->first();
-                    $toAddBack->amount = $sumAmount;
-                    $toAddBack->option_quantity = $sumQuantity;
-
-                    // remove the group from the array
-                    $newArray = $transactions->filter(function ($x) use ($transaction) {
-                        if ($x->close_date !== $transaction->close_date ||
-                            $x->underlier_symbol !== $transaction->underlier_symbol ||
-                            $x->option_side !== $transaction->option_side) {
-                            return $x;
-                        }
-
-                        return false;
-                    });
-
-                    // add the summed element back to the array
-                    $newArray[] = $toAddBack;
-
-                    // place it the correct order.
-                    $transactions = $newArray->sort();
-
-                    // break of this foreach loop
                     break;
                 }
             }
         }
 
         return $transactions;
+    }
+
+    /**
+     * collection manipulation:
+     * - squash the group down to a single element
+     * - sum the quantity and amount values
+     * - place squashed element back on collection
+     * - sort the collection.
+     *
+     * @param Collection $transactions
+     * @param $transaction
+     *
+     * @return Collection
+     */
+    protected function consolidateGroup(Collection $transactions, $transaction): Collection
+    {
+        // pull out the group.
+        $toSum = $transactions->filter(function ($x) use ($transaction) {
+            if ($x->close_date === $transaction->close_date &&
+                $x->underlier_symbol === $transaction->underlier_symbol &&
+                $x->option_side === $transaction->option_side
+            ) {
+                return $x;
+            }
+
+            return false;
+        });
+
+        // sum the amounts
+        $sumAmount = $toSum->reduce(function ($carry, $item) {
+            return $carry += $item->amount;
+        });
+
+        // sum the quantities
+        $sumQuantity = $toSum->reduce(function ($carry, $item) {
+            return $carry += $item->option_quantity;
+        });
+
+        // create the summed element
+        $toAddBack = $toSum->first();
+        $toAddBack->amount = $sumAmount;
+        $toAddBack->option_quantity = $sumQuantity;
+
+        // remove the group from the array
+        $newArray = $transactions->filter(function ($x) use ($transaction) {
+            if ($x->close_date !== $transaction->close_date ||
+                $x->underlier_symbol !== $transaction->underlier_symbol ||
+                $x->option_side !== $transaction->option_side
+            ) {
+                return $x;
+            }
+
+            return false;
+        });
+
+        // add the summed element back to the array
+        $newArray[] = $toAddBack;
+
+        // sort the array.
+        $transactions = $newArray->sort();
+
+        return $transactions;
+    }
+
+    /**
+     * @param $transaction
+     * @param $where2
+     * @param $count
+     * @param $i
+     * @param $tradeSum
+     */
+    protected function didTradeEnd($transaction, $where2, $count, $i, &$tradeSum)
+    {
+        // determine if trade has ended.
+        if ($transaction->option_side === 'BUY') {
+            $counts = DB::table('options_house_transaction')
+                ->select(DB::raw('count(*) as count'))
+                ->where('close_date', $transaction->close_date)
+                ->where('underlier_symbol', $transaction->underlier_symbol)
+                ->where('option_side', 'SELL')
+                ->where('security_type', 'OPTION')
+                ->whereIn('trade_type', $where2)
+                ->get();
+
+            foreach ($counts as $count) {
+                if ($count->count === 0) {
+                    echo "Trade win/lose: $tradeSum".'</br></br>';
+                    $tradeSum = 0;
+                }
+            }
+        } elseif ($transaction->option_side === 'SELL') {
+            if ($count !== $i) {
+                $counts = DB::table('options_house_transaction')
+                    ->select(DB::raw('count(*) as count'))
+                    ->where('symbol', $transaction->symbol)
+                    ->where('security_type', 'OPTION')
+                    ->whereIn('trade_type', $where2)
+                    ->get();
+
+                foreach ($counts as $count) {
+                    if ($count->count === 1) {
+                        echo "Trade win/lose: $tradeSum".'</br></br>';
+                        $tradeSum = 0;
+                    }
+                }
+            }
+        }
     }
 }

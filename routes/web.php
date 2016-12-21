@@ -95,9 +95,5 @@ Route::get('/test', ['as' => 'bar.show', 'uses' => 'BarController@show']);
 Route::get('/phpfiddler', 'PhpFiddler@show');
 
 Route::get('/reports', 'TransactionController@reports');
-Route::get('/byYear/{year}', 'TransactionController@getByYear');
-Route::get('/byYear/{year}/bySymbol/{symbol}', 'TransactionController@getByYearBySymbol');
 Route::get('/bySymbol/{symbol}', 'TransactionController@getBySymbol');
-Route::get('/byYearMonth/{yearMonth}', 'TransactionController@getByYearMonth');
-Route::get('/byYearMonth/{yearMonth}/{symbol}', 'TransactionController@getByYearMonthBySymbol');
 
