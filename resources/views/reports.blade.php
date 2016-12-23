@@ -322,7 +322,7 @@
                 </table>
             </div>
 
-            <example></example>
+            {{--<example></example>--}}
             <vue-test></vue-test>
 
             <div class="mastfoot">

@@ -2,7 +2,7 @@
     <div>
         <div>skills</div>
         <ul>
-            <li v-for="skill in skills">{{ skill }}</li>
+            <li v-for="skill in skills">{{ skill.close_date }}</li>
         </ul>
     </div>
 </template>
@@ -11,12 +11,12 @@
         ready() {
             console.log('vue-test Component ready.');
 
-            axios.get('/api/vue-test').then(response => this.skills = response.data);
+            axios.get('/bySymbol/anf').then(response => this.skills = response.data);
 
         },
         data(){
             return{
-                skills: []
+                skills: {}
             }
         }
     }

@@ -97,3 +97,14 @@ Route::get('/phpfiddler', 'PhpFiddler@show');
 Route::get('/reports', 'TransactionController@reports');
 Route::get('/bySymbol/{symbol}', 'TransactionController@getBySymbol');
 
+
+// accessing schema info via doctrine.
+Route::get('/tableData', function() {
+    $schema = DB::getDoctrineSchemaManager();
+
+    $columns = $schema->listTableColumns('options_house_transaction');
+    foreach ($columns as $column) {
+        echo $column->getName() . ': ' . $column->getType() . "\n";
+    }
+});
+
