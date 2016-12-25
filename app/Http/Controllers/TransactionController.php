@@ -6,8 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Entities\TransactionAggregateE;
 use App\Services\TransactionAggregateS;
-use DB;
 use Illuminate\Support\Collection;
+
 
 /**
  * Class TransactionController.
@@ -42,17 +42,28 @@ class TransactionController extends Controller
      */
     public function getBySymbol($symbol)
     {
-        $data = [];
 
         // derive TransactionAggregateE collection
         $CollectionAggregateE = $this
             ->transactionAggregateS
             ->getBySymbol($symbol);
 
-        // get the collection as an array
+        // convert to Jsonable return type
+        return $this->convertToJsonableType($CollectionAggregateE);
+    }
+
+    /**
+     * @param Collection $CollectionAggregateE
+     * @return array
+     */
+    protected function convertToJsonableType(Collection $CollectionAggregateE): array
+    {
+        $data = [];
+
+        // convert the collection to an array
         $transactions = $CollectionAggregateE->all();
 
-        // convert the array a json-able return type
+        // convert the array a jsonable return type
         /** @var TransactionAggregateE $transaction */
         foreach ($transactions as $transaction) {
             $data[] = $transaction->toArray();

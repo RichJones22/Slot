@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Entities\TransactionAggregateE;
+use App\OptionsHouseTransaction;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -15,6 +16,9 @@ use Illuminate\Support\Str;
  */
 class TransactionAggregateR
 {
+    /**
+     * @var array
+     */
     private $tradeWhere = ['Trade'];
     /**
      * @var TransactionAggregateE
@@ -25,19 +29,23 @@ class TransactionAggregateR
      */
     private $collection;
 
-    /** @var Model */
+    /**
+     * @var Model
+     */
     private $model;
 
     /**
      * TransactionAggregateR constructor.
-     *
-     * @param Collection            $collection
+     * @param OptionsHouseTransaction $optionsHouseTransaction
+     * @param Collection $collection
      * @param TransactionAggregateE $aggregateE
      */
     public function __construct(
+        OptionsHouseTransaction $optionsHouseTransaction,
         Collection $collection,
         TransactionAggregateE $aggregateE
     ) {
+        $this->model = $optionsHouseTransaction;
         $this->TransactionAggregateE = $aggregateE;
         $this->collection = $collection;
     }
@@ -83,7 +91,7 @@ class TransactionAggregateR
     {
         foreach ($transactions as $transaction) {
             /** @var Model $model */
-            $model = new $this->model();
+            $model = new $this->model;
 
             foreach ($transaction as $key => $value) {
                 $model->setAttribute($key, $value);

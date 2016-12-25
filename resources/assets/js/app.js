@@ -16,7 +16,7 @@ import * as $ from "jquery";
  * the application, or feel free to tweak this setup for your needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+// Vue.component('example', require('./components/Example.vue'));
 
 Vue.component('vue-test', require('./components/vue-test.vue'));
 

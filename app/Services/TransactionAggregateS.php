@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Entities\TransactionAggregateE;
 use App\Repositories\TransactionAggregateR;
 use Illuminate\Support\Collection;
+use DB;
 
 /**
  * Class TransactionAggregateS.
@@ -33,22 +34,12 @@ class TransactionAggregateS
      */
     public function getBySymbol($symbol): Collection
     {
-        $tradeProfit = 0;
+        $transactions=null;
 
-        // get all trades by symbol
-        $CollectionAggregateE = $this
-            ->aggregateR
-            ->getAllOptionsHouseTransactionsBySymbol($symbol);
-
-        // cull single buy options; this technique is for selling and rolling sold options
-        $transactions = $this->findRemoveSingleBuyItem($CollectionAggregateE);
-
-        // consolidate transactions
-        $transactions = $this->consolidateTransactions($transactions);
-
-        // calculate trade breaks and profits per trade
-        /* @var TransactionAggregateE $transaction */
-        $this->determineTradeProfits($transactions, $tradeProfit);
+        // wrap io in transaction
+        DB::transaction(function() use ($symbol, &$transactions) {
+            $transactions = $this->getBySymbolTransaction($symbol);
+        });
 
         return $transactions;
     }
@@ -203,6 +194,7 @@ class TransactionAggregateS
     {
         $count = $transactions->count();
         $i = 0;
+        /** @var TransactionAggregateE $transaction */
         foreach ($transactions as $transaction) {
             $tradeProfit += $transaction->getAmount();
 
@@ -228,7 +220,7 @@ class TransactionAggregateS
     protected function didTradeEnd(TransactionAggregateE $aggregateE, $count, $i): bool
     {
         // determine if trade has ended.
-        if ($aggregateE->getOptionQuantity() === 'BUY') {
+        if ($aggregateE->getOptionSide() === 'BUY') {
             $counts = $this->aggregateR->findSellSideTrades($aggregateE);
 
             foreach ($counts as $count) {
@@ -236,7 +228,7 @@ class TransactionAggregateS
                     return true;
                 }
             }
-        } elseif ($aggregateE->getOptionQuantity() === 'SELL') {
+        } elseif ($aggregateE->getOptionSide() === 'SELL') {
             if ($count !== $i) {
                 $counts = $this->aggregateR->findTrades($aggregateE);
 
@@ -249,5 +241,31 @@ class TransactionAggregateS
         }
 
         return false;
+    }
+
+    /**
+     * @param $symbol
+     * @return Collection
+     */
+    protected function getBySymbolTransaction($symbol): Collection
+    {
+        $tradeProfit = 0;
+
+        // get all trades by symbol
+        $CollectionAggregateE = $this
+            ->aggregateR
+            ->getAllOptionsHouseTransactionsBySymbol($symbol);
+
+        // cull single buy options; this technique is for selling and rolling sold options
+        $transactions = $this->findRemoveSingleBuyItem($CollectionAggregateE);
+
+        // consolidate transactions
+        $transactions = $this->consolidateTransactions($transactions);
+
+        // calculate trade breaks and profits per trade
+        /* @var TransactionAggregateE $transaction */
+        $this->determineTradeProfits($transactions, $tradeProfit);
+
+        return $transactions;
     }
 }
