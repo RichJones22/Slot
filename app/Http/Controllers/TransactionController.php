@@ -42,7 +42,6 @@ class TransactionController extends Controller
      */
     public function getBySymbol($symbol)
     {
-
         // derive TransactionAggregateE collection
         $CollectionAggregateE = $this
             ->transactionAggregateS
@@ -51,6 +50,15 @@ class TransactionController extends Controller
         // convert to Jsonable return type
         return $this->convertToJsonableType($CollectionAggregateE);
     }
+
+    public function getAllSymbols()
+    {
+        // derive TransactionAggregateE collection
+        $CollectionAggregateE = $this
+            ->transactionAggregateS
+            ->getBySymbol();
+    }
+
 
     /**
      * @param Collection $CollectionAggregateE

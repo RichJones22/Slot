@@ -10,6 +10,7 @@ require('./bootstrap');
 import * as axios from "vue";
 import * as $ from "jquery";
 
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the body of the page. From here, you may begin adding components to
@@ -18,11 +19,14 @@ import * as $ from "jquery";
 
 // Vue.component('example', require('./components/Example.vue'));
 
+window.Event = new Vue();
+
+Vue.component('select-symbol', require('./components/select-symbol.vue'));
 Vue.component('vue-test', require('./components/vue-test.vue'));
 
-// Vue.prototype.$http = axios;
 
 // const app = new Vue({
 new Vue({
     el: 'body',
 });
+

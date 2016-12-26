@@ -173,7 +173,7 @@
             .masthead,
             .mastfoot,
             .cover-container {
-                width: 42rem;
+                width: 70rem;
             }
         }
 
@@ -195,8 +195,8 @@
             </div>
 
             <div class="row">
-                <div class="col-md-2" style="border: 1px red;">
-                    other stuff here...
+                <div class="col-md-2">
+                    <select-symbol></select-symbol>
                 </div>
                 <div class="col-md-10">
                     <vue-test></vue-test>
