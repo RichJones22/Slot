@@ -13,33 +13,25 @@
     .select-bg {
         background-color: #cdcdcd;
     }
+
+    /* set background when selected */
     .select-bg:focus, .select-bg[type]:focus {
         background-color: #cdcdcd;
     }
 
 </style>
 <script>
+    import * as axios from "vue";
     export default{
         ready() {
             console.log('select-symbol Component ready.');
+
+            axios.get('/api/symbolsUnique').then(response => this.options = response.data);
         },
         data(){
             return{
                 selected: 'ANF',
-                options: [
-                    { text: 'ANF', value: 'ANF' },
-                    { text: 'F', value: 'F' },
-                    { text: 'FIT', value: 'FIT' },
-                    { text: 'FTR', value: 'FTR' },
-                    { text: 'GES', value: 'GES' },
-                    { text: 'GPRO', value: 'GPRO' },
-                    { text: 'MU', value: 'MU' },
-                    { text: 'NE', value: 'NE' },
-                    { text: 'PBI', value: 'PBI' },
-                    { text: 'SHLD', value: 'SHLD' },
-                    { text: 'VIX', value: 'VIX' },
-                    { text: 'RIG', value: 'RIG' }
-                ]
+                options: {}
             }
         },
         methods: {

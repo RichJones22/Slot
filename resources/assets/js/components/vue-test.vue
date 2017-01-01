@@ -9,7 +9,7 @@
                     <th>Qty</th>
                     <th>State</th>
                     <th>Strike</th>
-                    <th>Expiration</th>
+                    <th style="text-align: center;">Expiration</th>
                     <th>Amount</th>
                 </tr>
             </thead>
@@ -18,13 +18,13 @@
             <table class="table table-inverse" style="margin-bottom: 0;">
                 <tbody v-for="(itemObjKey, skill) in skills">
                     <tr>
-                        <td>{{ skill.close_date }}</td>
-                        <td>{{ skill.underlier_symbol }}</td>
+                        <td style="text-align: left;">{{ skill.close_date }}</td>
+                        <td style="text-align: left;">{{ skill.underlier_symbol }}</td>
                         <td>{{ skill.option_side }}</td>
                         <td>{{ skill.option_quantity }}</td>
                         <td>{{ skill.position_state }}</td>
                         <td>{{ skill.strike_price }}</td>
-                        <td>{{ skill.expiration }}</td>
+                        <td style="text-align: right;">{{ skill.expiration }}</td>
                         <td>{{ skill.amount }}</td>
                     </tr>
                     <tr v-if="skill.profits > 0">
@@ -34,7 +34,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>Win/Loss:</td>
+                        <td style="text-align: right;">Win/Loss:</td>
                         <td>{{ skill.profits }}</td>
                     </tr>
                     <tr v-if="skill.profits > 0">
@@ -75,6 +75,7 @@
 
     .table th, .table td {
         font-family: Courier, Menlo, Monaco, Consolas, "Courier New", monospace;
+        /*text-align: left;*/
     }
 
 </style>

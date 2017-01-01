@@ -23,7 +23,7 @@ class CreateOptionsHouseTransactionTable extends Migration
             $table->time('close_time');
             $table->string('trade_type');
             $table->string('description');
-            $table->integer('strike_price');
+            $table->float('strike_price');
             $table->string('option_type');
             $table->string('option_side');
             $table->integer('option_quantity')->nullable();

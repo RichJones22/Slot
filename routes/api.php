@@ -19,3 +19,5 @@ Route::get('/user', function (Request $request) {
 Route::get('vue-test', function () {
     return ['Laravel', 'Vue', 'PHP', 'JavaScript', 'Tooling'];
 });
+
+Route::get('/symbolsUnique', 'SymbolsController@symbolsUnique');
