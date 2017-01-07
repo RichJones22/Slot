@@ -89,13 +89,19 @@ Route::get('/', function () {
 ////    }
 });//
 
-Route::get('/test', ['as' => 'bar.show', 'uses' => 'BarController@show']);
+//Route::get('/test', ['as' => 'bar.show', 'uses' => 'BarController@show']);
 
 
 Route::get('/phpfiddler', 'PhpFiddler@show');
 
 Route::get('/reports', 'TransactionController@reports');
-Route::get('/bySymbol/{symbol}', 'TransactionController@getBySymbol');
+//Route::get('/bySymbol/{symbol}', 'TransactionController@getBySymbol');
+
+
+
+Route::get('/bySymbol/{symbol}', 'TransactionController@getSymbolsThatClosedThisMonth');
+
+//Route::get('/report', 'TransactionController@getSymbolsThatClosedThisMonth');
 
 
 // accessing schema info via doctrine.

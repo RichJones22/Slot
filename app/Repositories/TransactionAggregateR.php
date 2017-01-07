@@ -20,6 +20,12 @@ class TransactionAggregateR
      * @var array
      */
     private $tradeWhere = ['Trade'];
+
+    /**
+     * @var string
+     */
+    private $fromDate = '1900-01-01';
+
     /**
      * @var TransactionAggregateE
      */
@@ -73,9 +79,10 @@ class TransactionAggregateR
             ->whereIn('trade_type', $this->tradeWhere)
             ->where('underlier_symbol', $symbol)
             ->where('security_type', 'OPTION')
-            ->orderBy('close_date', 'asc')
-            ->orderBy('option_side', 'asc')
-            ->orderBy('expiration', 'asc')
+            ->where('close_date', '>', $this->fromDate)
+            ->orderBy('close_date', 'desc')
+//            ->orderBy('option_side', 'asc')
+//            ->orderBy('expiration', 'asc')
             ->get();
 
         // derive TransactionAggregateE collection
@@ -166,11 +173,26 @@ class TransactionAggregateR
         $counts = DB::table('options_house_transaction')
             ->select(DB::raw('count(*) as count'))
             ->where('symbol', $aggregateE->getSymbol())
+//                ->where('close_date', $aggregateE->getCloseDate())
             ->where('security_type', 'OPTION')
             ->whereIn('trade_type', $this->tradeWhere)
             ->get();
 
         return $counts;
+    }
+
+    /**
+     * @param string|null $fromDate
+     * @return $this
+     */
+    public function setFromDate(string $fromDate = null)
+    {
+        if (!empty($fromDate))
+        {
+            $this->fromDate = $fromDate;
+        }
+
+        return $this;
     }
 
     /**

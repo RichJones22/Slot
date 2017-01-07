@@ -35,6 +35,25 @@ class TransactionAggregateE
     // aggregates
     private $profits;
 
+    /** @var boolean */
+    private $tradeClosed;
+
+    /**
+     * @return mixed
+     */
+    public function getTradeClosed()
+    {
+        return $this->tradeClosed;
+    }
+
+    /**
+     * @param mixed $tradeClosed
+     */
+    public function setTradeClosed(bool $tradeClosed)
+    {
+        $this->tradeClosed = $tradeClosed;
+    }
+
     /**
      * @return mixed
      */

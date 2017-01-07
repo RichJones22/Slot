@@ -5,13 +5,13 @@
                 <tr>
                     <th>Trade Date</th>
                     <th>Symbol</th>
-                    <th>Side</th>
-                    <th>Qty</th>
-                    <th>State</th>
+                    <!--<th>Side</th>-->
+                    <!--<th>Qty</th>-->
+                    <!--<th>State</th>-->
                     <!--<th>Strike</th>-->
-                    <th style="text-align: center;">Expiration</th>
-                    <th>Profits</th>
-                    <th>Trade Closed</th>
+                    <!--<th style="text-align: center;">Expiration</th>-->
+                    <th style="text-align: right;">Profits</th>
+                    <!--<th>Trade Closed</th>-->
                 </tr>
             </thead>
         </table>
@@ -21,14 +21,14 @@
                     <tr>
                         <td style="text-align: left;">{{ skill.close_date }}</td>
                         <td style="text-align: left;">{{ skill.underlier_symbol }}</td>
-                        <td>{{ skill.option_side }}</td>
-                        <td>{{ skill.option_quantity }}</td>
-                        <td>{{ skill.position_state }}</td>
+                        <!--<td>{{ skill.option_side }}</td>-->
+                        <!--<td>{{ skill.option_quantity }}</td>-->
+                        <!--<td>{{ skill.position_state }}</td>-->
                         <!--<td>{{ skill.strike_price }}</td>-->
-                        <td style="text-align: right;">{{ skill.expiration }}</td>
+                        <!--<td style="text-align: right;">{{ skill.expiration }}</td>-->
                         <!--<td>{{ skill.amount }}</td>-->
-                        <td>{{ skill.profits }}</td>
-                        <td>{{ skill.tradeClosed }}</td>
+                        <td style="text-align: right;">{{ skill.profits }}</td>
+                        <!--<td>{{ skill.tradeClosed }}</td>-->
                     </tr>
                     <!--<tr v-if="skill.profits > 0">-->
                         <!--<td></td>-->
@@ -40,28 +40,28 @@
                         <!--<td style="text-align: right;">Win/Loss:</td>-->
                         <!--<td>{{ skill.profits }}</td>-->
                     <!--</tr>-->
-                    <tr v-if="skill.profits > 0">
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
+                    <!--<tr v-if="skill.profits > 0">-->
+                        <!--<td>&nbsp;</td>-->
+                        <!--<td>&nbsp;</td>-->
+                        <!--<td>&nbsp;</td>-->
+                        <!--<td>&nbsp;</td>-->
+                        <!--<td>&nbsp;</td>-->
+                        <!--<td>&nbsp;</td>-->
+                        <!--<td>&nbsp;</td>-->
+                        <!--<td>&nbsp;</td>-->
+                    <!--</tr>-->
                 </tbody>
             </table>
         </div>
         <table class="table table-inverse">
             <tbody v-for="(itemObjKey, skill) in skills">
                 <tr v-if="(itemObjKey + 1) == skills.length">
-                    <td class="col-xs-3"></td>
-                    <td class="col-xs-1"></td>
-                    <td class="col-xs-1"></td>
-                    <td class="col-xs-1"></td>
-                    <td class="col-xs-1"></td>
-                    <td class="col-xs-1"></td>
+                    <td class="col-xs-8"></td>
+                    <!--<td class="col-xs-1"></td>-->
+                    <!--<td class="col-xs-1"></td>-->
+                    <!--<td class="col-xs-1"></td>-->
+                    <!--<td class="col-xs-1"></td>-->
+                    <!--<td class="col-xs-1"></td>-->
                     <td class="col-xs-2">Total:</td>
                     <td class="col-xs-2">{{ runningTotal }}</td>
                 </tr>
@@ -85,7 +85,7 @@
 <script>
     export default{
         ready() {
-            console.log('vue-test Component ready.');
+            console.log('vue-closed-trades Component ready.');
 
             let outerThis = this;
 

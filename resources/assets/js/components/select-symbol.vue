@@ -21,7 +21,6 @@
 
 </style>
 <script>
-    import * as axios from "vue";
     export default{
         ready() {
             console.log('select-symbol Component ready.');

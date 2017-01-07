@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Entities\TransactionAggregateE;
 use App\Repositories\TransactionAggregateR;
+use App\Utilities\CurrentDateTime;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use DB;
 
@@ -16,15 +18,24 @@ class TransactionAggregateS
      * @var TransactionAggregateR
      */
     private $aggregateR;
+    /**
+     * @var SymbolService
+     */
+    private $symbolService;
 
     /**
      * TransactionAggregateS constructor.
      *
      * @param TransactionAggregateR $aggregateR
+     * @param SymbolService $symbolService
      */
-    public function __construct(TransactionAggregateR $aggregateR)
+    public function __construct(
+        TransactionAggregateR $aggregateR,
+        SymbolService $symbolService
+    )
     {
         $this->aggregateR = $aggregateR;
+        $this->symbolService = $symbolService;
     }
 
     /**
@@ -34,14 +45,59 @@ class TransactionAggregateS
      */
     public function getBySymbol($symbol): Collection
     {
-        $transactions=null;
-
         // wrap io in transaction
-        DB::transaction(function() use ($symbol, &$transactions) {
-            $transactions = $this->getBySymbolTransaction($symbol);
+        $transactions = DB::transaction(function() use ($symbol) {
+            return $this->getBySymbolTransaction($symbol);
         });
 
         return $transactions;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAllPutTrades(): Collection
+    {
+        $monthsBack = CurrentDateTime::new()->daysBack(180);
+
+        $result = new Collection();
+
+        $allSymbols = $this
+            ->symbolService
+            ->symbolsUnique()
+            ->all();
+
+        foreach($allSymbols as $symbol)
+        {
+            $transactions = $this
+                ->getBySymbolTransaction($symbol->underlier_symbol);
+
+            $tmp = $transactions->filter(function(TransactionAggregateE $x) {
+                return $x->getTradeClosed();
+            });
+
+            $result->push($tmp->all());
+        }
+
+        // flatten into an array; also removes empty $result
+        $tmp = [];
+        $results = $result->all();
+        foreach($results as $result)
+        {
+            foreach($result as $value)
+            {
+                $tmp[] = $value;
+            }
+        }
+
+        /** @var Collection $tmp */
+        $tmp = new Collection($tmp);
+        $tmp = $tmp->sort()->reverse();
+        $tmp = $tmp->sort()->reverse()->filter(function(TransactionAggregateE $x) use ($monthsBack){
+            return $x->getCloseDate() > $monthsBack;
+        });
+
+        return $tmp;
     }
 
     /**
@@ -118,7 +174,7 @@ class TransactionAggregateS
             }
         }
 
-        return $transactions;
+        return $transactions->sort();
     }
 
     /**
@@ -201,6 +257,8 @@ class TransactionAggregateS
             if ($this->didTradeEnd($transaction, $count, $i)) {
                 $transaction->setProfits($tradeProfit);
                 $tradeProfit = 0;
+
+                $this->setTradeCloseValue($transaction);
             } else {
                 $transaction->setProfits(0);
             }
@@ -233,8 +291,11 @@ class TransactionAggregateS
                 $counts = $this->aggregateR->findTrades($aggregateE);
 
                 foreach ($counts as $count) {
-                    if ($count->count === 1) {
-                        return true;
+                    $myDate = CurrentDateTime::new()->currentDate();
+                    if (CurrentDateTime::new()->currentDate() > $aggregateE->getExpiration()) {
+                        if ($count->count === 1) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -245,9 +306,10 @@ class TransactionAggregateS
 
     /**
      * @param $symbol
+     * @param null $fromDate
      * @return Collection
      */
-    protected function getBySymbolTransaction($symbol): Collection
+    protected function getBySymbolTransaction($symbol, $fromDate = null): Collection
     {
         $tradeProfit = 0;
 
@@ -267,5 +329,18 @@ class TransactionAggregateS
         $this->determineTradeProfits($transactions, $tradeProfit);
 
         return $transactions;
+    }
+
+    /**
+     * @param TransactionAggregateE $transaction
+     */
+    protected function setTradeCloseValue(TransactionAggregateE $transaction)
+    {
+//        if ($transaction->getExpiration() < Carbon::now()->format('Y-m-d')) {
+        if ($transaction->getCloseDate() < Carbon::now()->format('Y-m-d')) {
+            $transaction->setTradeClosed(true);
+        } else {
+            $transaction->setTradeClosed(false);
+        }
     }
 }

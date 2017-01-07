@@ -51,13 +51,17 @@ class TransactionController extends Controller
         return $this->convertToJsonableType($CollectionAggregateE);
     }
 
-//    public function getAllSymbols()
-//    {
-//        // derive TransactionAggregateE collection
-//        $CollectionAggregateE = $this
-//            ->transactionAggregateS
-//            ->getBySymbol();
-//    }
+    /**
+     * @return array
+     */
+    public function getSymbolsThatClosedThisMonth()
+    {
+        $CollectionAggregateE = $this
+            ->transactionAggregateS
+            ->getAllPutTrades();
+
+        return $this->convertToJsonableType($CollectionAggregateE);
+    }
 
 
     /**

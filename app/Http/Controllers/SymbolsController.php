@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\SymbolService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Services\TransactionAggregateS;
@@ -15,16 +16,15 @@ use Illuminate\Support\Collection;
  */
 class SymbolsController extends Controller
 {
-    private $transactionAggregateS;
+    private $symbolService;
 
     /**
-     * TransactionController constructor.
-     *
-     * @param TransactionAggregateS $aggregateS
+     * SymbolsController constructor.
+     * @param SymbolService $symbolService
      */
-    public function __construct(TransactionAggregateS $aggregateS)
+    public function __construct(SymbolService $symbolService)
     {
-        $this->transactionAggregateS = $aggregateS;
+        $this->symbolService = $symbolService;
     }
 
 
@@ -33,17 +33,10 @@ class SymbolsController extends Controller
      */
     public function symbolsUnique()
     {
-
-        /** @var Model $transactions */
-        $transactionCollection = DB::table('options_house_transaction')
-            ->select('underlier_symbol')
-            ->orderBy('underlier_symbol', 'asc')
-            ->groupBy('underlier_symbol')
-            ->where('underlier_symbol', '<>', '')
-            ->get();
+        $symbolCollection = $this->symbolService->symbolsUnique();
 
         // convert the collection to an array
-        return $this->convertToJsonableType($transactionCollection);
+        return $this->convertToJsonableType($symbolCollection);
     }
 
     /**
@@ -57,11 +50,11 @@ class SymbolsController extends Controller
         $transactions = $transactionCollection->all();
 
         foreach ($transactions as $transaction) {
-            $inner = [];
-            $inner['text'] = $transaction->underlier_symbol;
-            $inner['value'] = $transaction->underlier_symbol;
+            $tmp = [];
+            $tmp['text'] = $transaction->underlier_symbol;
+            $tmp['value'] = $transaction->underlier_symbol;
 
-            $data[] = $inner;
+            $data[] = $tmp;
         }
 
         return $data;

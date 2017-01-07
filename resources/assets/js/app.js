@@ -22,6 +22,7 @@ import * as $ from "jquery";
 window.Event = new Vue();
 
 Vue.component('select-symbol', require('./components/select-symbol.vue'));
+Vue.component('vue-closed_trades', require('./components/vue-closed-trades.vue'));
 Vue.component('vue-test', require('./components/vue-test.vue'));
 
 

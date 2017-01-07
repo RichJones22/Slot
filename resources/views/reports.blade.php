@@ -199,7 +199,7 @@
                     <select-symbol></select-symbol>
                 </div>
                 <div class="col-md-10">
-                    <vue-test></vue-test>
+                    <vue-closed_trades></vue-closed_trades>
                 </div>
             </div>
 
