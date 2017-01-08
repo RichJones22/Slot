@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Entities\TransactionAggregateE;
 use App\Repositories\TransactionAggregateR;
 use App\Utilities\CurrentDateTime;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use DB;
 
@@ -336,8 +335,7 @@ class TransactionAggregateS
      */
     protected function setTradeCloseValue(TransactionAggregateE $transaction)
     {
-//        if ($transaction->getExpiration() < Carbon::now()->format('Y-m-d')) {
-        if ($transaction->getCloseDate() < Carbon::now()->format('Y-m-d')) {
+        if ($transaction->getCloseDate() < CurrentDateTime::new()->currentDate()) {
             $transaction->setTradeClosed(true);
         } else {
             $transaction->setTradeClosed(false);

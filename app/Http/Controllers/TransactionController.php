@@ -6,8 +6,8 @@ namespace App\Http\Controllers;
 
 use App\Entities\TransactionAggregateE;
 use App\Services\TransactionAggregateS;
+use Cache;
 use Illuminate\Support\Collection;
-
 
 /**
  * Class TransactionController.
@@ -56,6 +56,11 @@ class TransactionController extends Controller
      */
     public function getSymbolsThatClosedThisMonth()
     {
+        $data = Cache::get('getAllPutTrades');
+        if ($data) {
+            return json_decode($data);
+        }
+
         $CollectionAggregateE = $this
             ->transactionAggregateS
             ->getAllPutTrades();
@@ -63,9 +68,9 @@ class TransactionController extends Controller
         return $this->convertToJsonableType($CollectionAggregateE);
     }
 
-
     /**
      * @param Collection $CollectionAggregateE
+     *
      * @return array
      */
     protected function convertToJsonableType(Collection $CollectionAggregateE): array
@@ -80,6 +85,8 @@ class TransactionController extends Controller
         foreach ($transactions as $transaction) {
             $data[] = $transaction->toArray();
         }
+
+        Cache::put('getAllPutTrades', json_encode($data), 60);
 
         return $data;
     }

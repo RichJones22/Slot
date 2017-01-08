@@ -11,7 +11,8 @@
         "barryvdh/laravel-ide-helper": "^2.2",
         "doctrine/dbal": "^2.5",
         "Premise/laralang": "dev-master",
-        "premise/utilities": "dev-master"
+        "premise/utilities": "dev-master",
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
