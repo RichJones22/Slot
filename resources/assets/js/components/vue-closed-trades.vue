@@ -58,7 +58,7 @@
         },
         methods: {
             getSymbol: function(url) {
-                $.get(url).then(response => this.skills = response.data);
+                axios.get(url).then(response => this.skills = response.data);
             }
         },
         data(){
